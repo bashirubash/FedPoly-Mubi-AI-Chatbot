@@ -1,27 +1,17 @@
 from transformers import pipeline
 
-# Load Falcon-7B-Instruct (free & public)
+# Load lightweight model for Render Free Tier
 chatbot = pipeline(
-    "text-generation",
-    model="tiiuae/falcon-7b-instruct",
-    max_new_tokens=200,
-    temperature=0.6,
-    do_sample=True
+    "text2text-generation",
+    model="google/flan-t5-small"
 )
 
 def get_response(user_input):
     prompt = (
         "You are an academic assistant chatbot for Federal Polytechnic Mubi.\n"
-        "Answer the student's question clearly and accurately.\n\n"
+        "Answer clearly and briefly.\n\n"
         f"Student: {user_input}\nAssistant:"
     )
 
-    result = chatbot(prompt)[0]['generated_text']
-
-    # Extract only the assistant's response
-    if "Assistant:" in result:
-        reply = result.split("Assistant:")[-1].strip()
-    else:
-        reply = result.strip()
-
-    return reply
+    result = chatbot(prompt, max_new_tokens=100)[0]['generated_text']
+    return result.strip()
