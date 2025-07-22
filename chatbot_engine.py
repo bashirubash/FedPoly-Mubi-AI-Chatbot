@@ -1,9 +1,9 @@
 from transformers import pipeline
 
-# Load Mistral 7B Instruct from Hugging Face
+# Load Falcon-7B-Instruct (free & public)
 chatbot = pipeline(
     "text-generation",
-    model="mistralai/Mistral-7B-Instruct-v0.2",
+    model="tiiuae/falcon-7b-instruct",
     max_new_tokens=200,
     temperature=0.6,
     do_sample=True
@@ -23,5 +23,5 @@ def get_response(user_input):
         reply = result.split("Assistant:")[-1].strip()
     else:
         reply = result.strip()
-    
+
     return reply
